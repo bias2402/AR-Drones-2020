@@ -58,7 +58,9 @@ public class ControlHandler : MonoBehaviour {
     }
 
     void UpdateDronePointer() {
-        droneRb.transform.rotation = Quaternion.LookRotation(droneRb.position - dronePointer.position);
+        Vector3 relativePosition = droneRb.position - dronePointer.position;
+        float angle = Vector3.Angle(relativePosition, dronePointer.forward);
+        dronePointer.rotation = Quaternion.Euler(0, angle, 50);
     }
 
     void FixedUpdate() {
@@ -95,7 +97,6 @@ public class ControlHandler : MonoBehaviour {
         }
         GameObject drone = Instantiate(droneGO, transform);
         droneRb = drone.GetComponent<Rigidbody>();
-        ResetDrone();
     }
 
     public void SpawnDrone(Image btn) {
@@ -106,14 +107,17 @@ public class ControlHandler : MonoBehaviour {
     }
 
     public void StartDrone() {
+        CheckVisibilityOfMenuParts();
         isDroneMoving = true;
     }
 
     public void StopDrone() {
+        CheckVisibilityOfMenuParts();
         isDroneMoving = false;
     }
 
     public void ResetDrone() {
+        CheckVisibilityOfMenuParts();
         isDroneMoving = false;
         droneRb.transform.position = FlyModePosition();
         droneRb.transform.rotation = FlyModeRotation();
