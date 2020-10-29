@@ -2277,7 +2277,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Spawnable
+  m_Text: Spawnables
 --- !u!222 &454896664
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4616,7 +4616,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Spawnable Drones
+  m_Text: Altitude
 --- !u!222 &1332792408
 CanvasRenderer:
   m_ObjectHideFlags: 0
