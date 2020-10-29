@@ -16,9 +16,13 @@ public class ControlHandler : MonoBehaviour {
     [SerializeField] private Sprite menuOff = null;
     [SerializeField] private Image menuOnOffImage = null;
     [SerializeField] private Slider progressBar = null;
-    [SerializeField] private Image[] spawnImages = null;
     [SerializeField] private Image[] modeImages = null;
     [SerializeField] private Image[] altitudeImages = null;
+
+    [Header("Spawnables Settings")]
+    [SerializeField] private GameObject showDrones = null;
+    [SerializeField] private GameObject showForms = null;
+    [SerializeField] private Image currentSpawn = null;
 
     private bool isMenuShown = true;
     private bool isDroneMoving = false;
@@ -30,7 +34,7 @@ public class ControlHandler : MonoBehaviour {
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
 
-    private void Update() {
+    void Update() {
         if (isStartingUp) {
             if (startCounter > 3) {
                 startCounter += Time.deltaTime;
@@ -47,7 +51,7 @@ public class ControlHandler : MonoBehaviour {
             }
 
             if (droneRb != null) {
-                UpdateDronePointer();
+                //UpdateDronePointer();
             }
         }
     }
@@ -61,7 +65,7 @@ public class ControlHandler : MonoBehaviour {
         Vector3 relativePosition = droneRb.position - dronePointer.position;
         float angle = Vector3.Angle(relativePosition, dronePointer.forward);
         dronePointer.rotation = Quaternion.Euler(0, angle, 50);
-    }
+    }                       //Work in process
 
     void FixedUpdate() {
         if (droneRb == null) { return; }
@@ -82,12 +86,30 @@ public class ControlHandler : MonoBehaviour {
     }
 
     public void ToggleMenu() {
+        CheckVisibilityOfMenuParts();
         isMenuShown = !isMenuShown;
         menuAnimator.SetBool("isShown", isMenuShown);
         menuOnOffImage.sprite = isMenuShown ? menuOn : menuOff;
     }
 
+    public void ShowSpawnablesCategory(int category) {
+        switch (category) {
+            case 0:
+                showDrones.SetActive(true);
+                showForms.SetActive(false);
+                break;
+            case 1:
+                showDrones.SetActive(false);
+                showForms.SetActive(true);
+                break;
+        }
+    }
+
     public void SpawnDrone(GameObject droneGO) {
+        if (droneGO == null) return;
+        showDrones.SetActive(false);
+        showForms.SetActive(false);
+
         if (lastMenuItemShown == 0) {
             lastMenuItemShown++;
             menuAnimator.SetInteger("menuShown", lastMenuItemShown);
@@ -99,11 +121,9 @@ public class ControlHandler : MonoBehaviour {
         droneRb = drone.GetComponent<Rigidbody>();
     }
 
-    public void SpawnDrone(Image btn) {
-        foreach (Image img in spawnImages) {
-            img.color = Color.white;
-        }
-        btn.color = Color.yellow;
+    public void SpawnDrone(Sprite spr) {
+        if (spr == null) return;
+        currentSpawn.sprite = spr;
     }
 
     public void StartDrone() {
