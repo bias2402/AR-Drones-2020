@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 7652177376000413922}
   - component: {fileID: 2840814789131805469}
   - component: {fileID: 8114981989480523340}
+  - component: {fileID: 3794033564928939998}
   m_Layer: 0
   m_Name: Health Drone
   m_TagString: Untagged
@@ -332,7 +333,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: de77493b5534df44b8cae4aa30997c4c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -453,6 +454,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3794033564928939998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124118361721401104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e25fb3d3685043a98047d489d1cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneRb: {fileID: 3512630846234780419}
+  isDroneMoving: 0
+  droneParticles:
+  - {fileID: 7923912609918230593}
+  audioSource: {fileID: 8114981989480523340}
 --- !u!1001 &6905493434880952843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -797,7 +815,7 @@ PrefabInstance:
     - target: {fileID: 1056940976810389414, guid: 983946a9e73c4d1418df722abc43c665,
         type: 3}
       propertyPath: prewarm
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1056940976810389414, guid: 983946a9e73c4d1418df722abc43c665,
         type: 3}
@@ -809,11 +827,32 @@ PrefabInstance:
       propertyPath: lengthInSec
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1056940976810389414, guid: 983946a9e73c4d1418df722abc43c665,
+        type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1056940976810389414, guid: 983946a9e73c4d1418df722abc43c665,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1056940976810389413, guid: 983946a9e73c4d1418df722abc43c665,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 983946a9e73c4d1418df722abc43c665, type: 3}
 --- !u!4 &7923912609918230592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1056940976810389415, guid: 983946a9e73c4d1418df722abc43c665,
+    type: 3}
+  m_PrefabInstance: {fileID: 7159710477436342247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7923912609918230593 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1056940976810389414, guid: 983946a9e73c4d1418df722abc43c665,
     type: 3}
   m_PrefabInstance: {fileID: 7159710477436342247}
   m_PrefabAsset: {fileID: 0}

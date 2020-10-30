@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ControlHandler : MonoBehaviour {
+public class Handler : MonoBehaviour {
     private enum FlyMode { FlyBy, FlyAway, FlyTo }
     private FlyMode flyMode = FlyMode.FlyAway;
-    private Rigidbody droneRb = null;
     private Vector3 startPoint = Vector3.zero;
     private Vector3 destination = Vector3.zero;
     private int altitude = 2;
+    private DroneController drone = null;
 
     [Header("Menu Controls")]
     [SerializeField] private Sprite menuOn = null;
@@ -25,7 +25,6 @@ public class ControlHandler : MonoBehaviour {
     [SerializeField] private Image currentSpawn = null;
 
     private bool isMenuShown = true;
-    private bool isDroneMoving = false;
     private bool isStartingUp = true;
     private float startCounter = 0;
     private int lastMenuItemShown = -1;
@@ -33,7 +32,6 @@ public class ControlHandler : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
-    [SerializeField] private ParticleSystem droneParticles = null;
 
     void Update() {
         if (isStartingUp) {
@@ -44,40 +42,24 @@ public class ControlHandler : MonoBehaviour {
                 isStartingUp = false;
             }
         } else {
-            if (isDroneMoving) {
+            if (drone != null && drone.GetIsDroneMoving()) {
                 if (DestinationReached()) {
-                    droneRb.position = startPoint;
+                    drone.ResetDrone(FlyModePosition(), FlyModeRotation());
+                    drone.StartDrone();
                 }
-                UpdateProgressBar();
             }
 
-            if (droneRb != null) {
-                //UpdateDronePointer();
-            }
+            //if (drone != null) {
+            //    UpdateDronePointer();
+            //}
         }
-    }
-
-    void UpdateProgressBar() {
-        float value = Vector3.Distance(destination, droneRb.position) / Vector3.Distance(destination, startPoint) * 100;
-        progressBar.value = value;
     }
 
     void UpdateDronePointer() {
-        Vector3 relativePosition = droneRb.position - dronePointer.position;
+        Vector3 relativePosition = drone.GetRigidbody().position - dronePointer.position;
         float angle = Vector3.Angle(relativePosition, dronePointer.forward);
         dronePointer.rotation = Quaternion.Euler(0, angle, 50);
     }                       //Work in process
-
-    void FixedUpdate() {
-        if (droneRb == null) { return; }
-        if (isDroneMoving) {
-            if (droneRb.velocity.magnitude >= 15) { return; }
-            droneRb.AddRelativeForce(Vector3.forward, ForceMode.Acceleration);
-        } else {
-            droneRb.velocity = Vector3.zero;
-            droneRb.angularVelocity = Vector3.zero;
-        }
-    }
 
     void CheckVisibilityOfMenuParts() {
         if (lastMenuItemShown < 4) {
@@ -118,8 +100,7 @@ public class ControlHandler : MonoBehaviour {
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
-        GameObject drone = Instantiate(droneGO, transform);
-        droneRb = drone.GetComponent<Rigidbody>();
+        drone = Instantiate(droneGO, transform).GetComponent<DroneController>();
     }
 
     public void SpawnDrone(Sprite spr) {
@@ -129,32 +110,13 @@ public class ControlHandler : MonoBehaviour {
 
     public void StartDrone() {
         CheckVisibilityOfMenuParts();
-        isDroneMoving = true;
-        droneParticles = droneRb.GetComponentInChildren<ParticleSystem>();
-        if (droneParticles != null) droneParticles.Play();
-    }
-
-    public void StopDrone() {
-        CheckVisibilityOfMenuParts();
-        isDroneMoving = false;
-    }
-
-    public void ResetDrone() {
-        CheckVisibilityOfMenuParts();
-        isDroneMoving = false;
-        droneRb.transform.position = FlyModePosition();
-        droneRb.transform.rotation = FlyModeRotation();
-        droneRb.velocity = Vector3.zero;
-        droneRb.angularVelocity = Vector3.zero;
+        drone.StartDrone();
     }
 
     public void FlyAway(Image btn) {
         CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyAway;
-        startPoint = droneRb.transform.position = FlyModePosition();
-        droneRb.transform.rotation = FlyModeRotation();
-        droneRb.velocity = Vector3.zero;
-        droneRb.angularVelocity = Vector3.zero;
+        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(0, altitude, 120);
         ModeColors(btn);
     }
@@ -162,10 +124,7 @@ public class ControlHandler : MonoBehaviour {
     public void FlyTowards(Image btn) {
         CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyTo;
-        startPoint = droneRb.transform.position = FlyModePosition();
-        droneRb.transform.rotation = FlyModeRotation();
-        droneRb.velocity = Vector3.zero;
-        droneRb.angularVelocity = Vector3.zero;
+        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(0, altitude, 0);
         ModeColors(btn);
     }
@@ -173,10 +132,7 @@ public class ControlHandler : MonoBehaviour {
     public void FlyBy(Image btn) {
         CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyBy;
-        startPoint = droneRb.transform.position = FlyModePosition();
-        droneRb.transform.rotation = FlyModeRotation();
-        droneRb.velocity = Vector3.zero;
-        droneRb.angularVelocity = Vector3.zero;
+        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(-100, altitude, 50);
         ModeColors(btn);
     }
@@ -191,13 +147,13 @@ public class ControlHandler : MonoBehaviour {
     bool DestinationReached() {
         switch (flyMode) {
             case FlyMode.FlyAway:
-                if (droneRb.position.z > destination.z) { return true; }
+                if (drone.transform.position.z > destination.z) { return true; }
                 break;
             case FlyMode.FlyBy:
-                if (droneRb.position.x < destination.x) { return true; }
+                if (drone.transform.position.x < destination.x) { return true; }
                 break;
             case FlyMode.FlyTo:
-                if (droneRb.position.z < destination.z) { return true; }
+                if (drone.transform.position.z < destination.z) { return true; }
                 break;
         }
         return false;
@@ -232,7 +188,8 @@ public class ControlHandler : MonoBehaviour {
     public void SetAltitude(int altitude) {
         CheckVisibilityOfMenuParts();
         this.altitude = altitude;
-        if (droneRb != null) droneRb.position = new Vector3(droneRb.position.x, altitude, droneRb.position.z);
+        if (drone != null) drone.transform.position = 
+                new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
     }
 
     public void SetAltitude(Image btn) {

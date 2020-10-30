@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 217393727}
   - component: {fileID: 217393722}
   - component: {fileID: 2979495172180728146}
+  - component: {fileID: 3958631249329354921}
   m_Layer: 0
   m_Name: Drone Emo
   m_TagString: Untagged
@@ -139,7 +140,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: de77493b5534df44b8cae4aa30997c4c, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -260,3 +261,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3958631249329354921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303421058979285125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3e25fb3d3685043a98047d489d1cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneRb: {fileID: 3156616335766542439}
+  isDroneMoving: 0
+  droneParticles: []
+  audioSource: {fileID: 2979495172180728146}
