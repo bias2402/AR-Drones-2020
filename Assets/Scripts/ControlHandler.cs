@@ -33,6 +33,7 @@ public class ControlHandler : MonoBehaviour {
     [Header("Effects")]
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
+    [SerializeField] private ParticleSystem droneParticles = null;
 
     void Update() {
         if (isStartingUp) {
@@ -129,6 +130,8 @@ public class ControlHandler : MonoBehaviour {
     public void StartDrone() {
         CheckVisibilityOfMenuParts();
         isDroneMoving = true;
+        droneParticles = droneRb.GetComponentInChildren<ParticleSystem>();
+        if (droneParticles != null) droneParticles.Play();
     }
 
     public void StopDrone() {
