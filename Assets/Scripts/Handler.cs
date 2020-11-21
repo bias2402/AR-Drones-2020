@@ -19,7 +19,13 @@ public class Handler : MonoBehaviour {
     [SerializeField] private Image[] modeImages = null;
     [SerializeField] private Image[] altitudeImages = null;
 
+    [Header("Drone Editor")]
+    [SerializeField] private Button droneEditorBtn = null;
+    [SerializeField] private Transform dronePlacementInEditor = null;
+
     [Header("Spawnables Settings")]
+    [SerializeField] private Vector3 spawnPosition = new Vector3(3.5f, -2.5f, 18);
+    [SerializeField] private Vector3 spawnRotation = new Vector3(0, 180, 0);
     [SerializeField] private GameObject showDrones = null;
     [SerializeField] private GameObject showForms = null;
     [SerializeField] private Image currentSpawn = null;
@@ -30,11 +36,17 @@ public class Handler : MonoBehaviour {
     private int lastMenuItemShown = -1;
 
     [Header("Effects")]
+    [SerializeField] private bool doAnimateMenuSetup = false;
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
 
     void Update() {
         if (isStartingUp) {
+            if (!doAnimateMenuSetup) {
+                isStartingUp = false;
+                menuAnimator.SetInteger("menuShown", 10);
+                return;
+            }
             if (startCounter > 3) {
                 startCounter += Time.deltaTime;
             } else {
@@ -42,16 +54,18 @@ public class Handler : MonoBehaviour {
                 isStartingUp = false;
             }
         } else {
-            if (drone != null && drone.GetIsDroneMoving()) {
-                if (DestinationReached()) {
-                    drone.ResetDrone(FlyModePosition(), FlyModeRotation());
-                    drone.StartDrone();
-                }
-            }
+            if (drone != null) {
+                if (!droneEditorBtn.interactable) droneEditorBtn.interactable = true;
 
-            //if (drone != null) {
-            //    UpdateDronePointer();
-            //}
+                if (drone.GetIsDroneMoving()) {
+                    if (DestinationReached()) {
+                        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
+                        drone.StartDrone();
+                    }
+                }
+
+                //    UpdateDronePointer();
+            }
         }
     }
 
@@ -101,6 +115,8 @@ public class Handler : MonoBehaviour {
             Destroy(child.gameObject);
         }
         drone = Instantiate(droneGO, transform).GetComponent<DroneController>();
+        drone.transform.position = spawnPosition;
+        drone.transform.rotation = Quaternion.Euler(spawnRotation);
     }
 
     public void SpawnDrone(Sprite spr) {
@@ -110,6 +126,7 @@ public class Handler : MonoBehaviour {
 
     public void StartDrone() {
         CheckVisibilityOfMenuParts();
+        if (drone == null) return;
         drone.StartDrone();
     }
 
@@ -188,8 +205,7 @@ public class Handler : MonoBehaviour {
     public void SetAltitude(int altitude) {
         CheckVisibilityOfMenuParts();
         this.altitude = altitude;
-        if (drone != null) drone.transform.position = 
-                new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
+        if (drone != null) drone.transform.position = new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
     }
 
     public void SetAltitude(Image btn) {
@@ -197,5 +213,18 @@ public class Handler : MonoBehaviour {
             img.color = Color.white;
         }
         btn.color = Color.yellow;
+    }
+
+    public void OpenDroneEditor(bool isOpening) {
+        menuAnimator.SetBool("isUsingEditor", isOpening);
+
+        if (isOpening) {
+            drone.transform.parent = dronePlacementInEditor;
+            drone.transform.localPosition = Vector3.zero;
+        } else {
+            drone.transform.parent = transform;
+            drone.transform.localPosition = spawnPosition;
+            drone.transform.rotation = Quaternion.Euler(spawnRotation);
+        }
     }
 }

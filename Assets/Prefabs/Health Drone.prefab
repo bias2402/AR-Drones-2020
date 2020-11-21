@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 2840814789131805469}
   - component: {fileID: 8114981989480523340}
   - component: {fileID: 3794033564928939998}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Health Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,6 +471,7 @@ MonoBehaviour:
   droneParticles:
   - {fileID: 7923912609918230593}
   audioSource: {fileID: 8114981989480523340}
+  model: {fileID: 6905493434880561293}
 --- !u!1001 &6905493434880952843
 PrefabInstance:
   m_ObjectHideFlags: 0

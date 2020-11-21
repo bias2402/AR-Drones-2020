@@ -7,15 +7,23 @@ public class DroneController : MonoBehaviour {
     [SerializeField] private bool isDroneMoving = false;
     [SerializeField] private ParticleSystem[] droneParticles = null;
     [SerializeField] private AudioSource audioSource = null;
+    [SerializeField] private Transform model = null;
 
     //Get/Set methods
     #region
     public bool GetIsDroneMoving() { return isDroneMoving; }
 
     public Rigidbody GetRigidbody() { return droneRb; }
+
+    public Transform GetModel() { return model; }
     #endregion
 
+    private void Start() {
+        droneRb.isKinematic = true;
+    }
+
     public void StartDrone() {
+        droneRb.isKinematic = false;
         isDroneMoving = true;
         if (audioSource != null) audioSource.Play();
 
@@ -24,6 +32,7 @@ public class DroneController : MonoBehaviour {
     }
 
     public void StopDrone() {
+        droneRb.isKinematic = true;
         isDroneMoving = false;
         if (audioSource != null) audioSource.Stop();
 
