@@ -66,6 +66,11 @@ public class DroneEditor : MonoBehaviour {
 
     public void RotateDroneDown() => drone.localRotation = Quaternion.Euler(-90, 180, 0);
 
+    public void RotateDroneFront() => drone.localRotation = Quaternion.Euler(0, 180, 0);
+
+    public void RotateDroneBack() => drone.localRotation = Quaternion.Euler(0, 0, 0);
+
+
     void SelectDronePart(int i) {
         foreach (ModelPart mp in modelParts) {
             mp.image.color = Color.white;
