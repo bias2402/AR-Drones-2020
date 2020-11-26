@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class FlickeringLight : MonoBehaviour {
     [SerializeField] private bool isOnAtStart = false;
-    private float flickeringTime = 0.3f;
+    [Range(0, 0.5f)] [SerializeField] private float delay = 0;
+    private float flickeringTime = 0.5f;
     private float counter = 0;
     private Light lightSource = null;
 
     void Start() {
         lightSource = GetComponent<Light>();
         lightSource.enabled = isOnAtStart;
+        counter += delay;
     }
 
     void Update() {

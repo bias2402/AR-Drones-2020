@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 0
+  delay: 0.125
 --- !u!1 &2640172163735794724
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 0
+  delay: 0.375
 --- !u!1 &3383681709030449022
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66312b85799dc944aa72e020d802928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnAtStart: 0
+  isOnAtStart: 1
+  delay: 0
 --- !u!1 &7569915419643992200
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 0
+  delay: 0.25
 --- !u!1001 &8136031056068480466
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 0
+  delay: 0
 --- !u!1 &6321720692668364130
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66312b85799dc944aa72e020d802928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnAtStart: 0
+  isOnAtStart: 1
+  delay: 0
 --- !u!1001 &5319379977188931417
 PrefabInstance:
   m_ObjectHideFlags: 0

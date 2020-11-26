@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 1
+  delay: 0
 --- !u!1 &1853162109787712672
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnAtStart: 0
+  delay: 0
 --- !u!1 &3071729545068888089
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5463126607667295882}
   - component: {fileID: 4737249882865692685}
+  - component: {fileID: 6684621607739642142}
   m_Layer: 0
   m_Name: Light Camera
   m_TagString: Untagged
@@ -235,6 +238,20 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &6684621607739642142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3071729545068888089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66312b85799dc944aa72e020d802928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOnAtStart: 0
+  delay: 0.25
 --- !u!1 &6124118361721401104
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +267,7 @@ GameObject:
   - component: {fileID: 3794033564928939998}
   - component: {fileID: 3001512543060733427}
   m_Layer: 8
-  m_Name: Health Drone OG
+  m_Name: Health Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
