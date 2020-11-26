@@ -12,6 +12,8 @@ public class Handler : MonoBehaviour {
     private DroneController drone = null;
 
     [Header("Menu Controls")]
+    [SerializeField] private GameObject menu = null;
+    [SerializeField] private GameObject editor = null;
     [SerializeField] private Sprite menuOn = null;
     [SerializeField] private Sprite menuOff = null;
     [SerializeField] private Image menuOnOffImage = null;
@@ -39,6 +41,11 @@ public class Handler : MonoBehaviour {
     [SerializeField] private bool doAnimateMenuSetup = false;
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
+
+    void Start() {
+        editor.SetActive(false);
+        menu.SetActive(true);
+    }
 
     void Update() {
         if (isStartingUp) {
