@@ -1606,7 +1606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &203621796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1830,34 +1830,11 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 267808578}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7303421058979285125, guid: 2d1b9fdf1ce154e48a2c3d4247f56ac4,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &267808578
@@ -2208,34 +2185,11 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 273654999}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7303421058979285125, guid: 2d1b9fdf1ce154e48a2c3d4247f56ac4,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &273654999
@@ -3985,7 +3939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &826233635
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4797,34 +4751,11 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1022114995}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 7303421058979285125, guid: 2d1b9fdf1ce154e48a2c3d4247f56ac4,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1948051541}
-        m_MethodName: SpawnDrone
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1022114995
@@ -5118,7 +5049,7 @@ MonoBehaviour:
         m_MethodName: SpawnDrone
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7303421058979285125, guid: 2d1b9fdf1ce154e48a2c3d4247f56ac4,
+          m_ObjectArgument: {fileID: 6321720692668364130, guid: f649b80b159d5e5488bd44f49271daf5,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -5130,7 +5061,8 @@ MonoBehaviour:
         m_MethodName: SpawnDrone
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgument: {fileID: 21300000, guid: ab59a31834d4bde4d8890bb146c7ef7e,
+            type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -5159,7 +5091,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 69d28c7876e71e24285c2c115e865e77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab59a31834d4bde4d8890bb146c7ef7e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6019,7 +5951,7 @@ MonoBehaviour:
         m_MethodName: SpawnDrone
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: 31164414927764048ae2d90d31d65092,
+          m_ObjectArgument: {fileID: 21300000, guid: 0c98f3644336f1946822b78e4479d6b5,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
@@ -6049,7 +5981,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 31164414927764048ae2d90d31d65092, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c98f3644336f1946822b78e4479d6b5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9466,7 +9398,7 @@ MonoBehaviour:
         m_MethodName: SpawnDrone
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7303421058979285125, guid: 2d1b9fdf1ce154e48a2c3d4247f56ac4,
+          m_ObjectArgument: {fileID: 3383681709030449022, guid: 2c1c307a80d6dde46a73c0f75ae0ecaa,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -9478,7 +9410,7 @@ MonoBehaviour:
         m_MethodName: SpawnDrone
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: 48a38d094c1e16b49935218692a3a735,
+          m_ObjectArgument: {fileID: 21300000, guid: 9f1f4dbaa4cc20a4fb02f41c35532cc3,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
@@ -9508,7 +9440,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 48a38d094c1e16b49935218692a3a735, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f1f4dbaa4cc20a4fb02f41c35532cc3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
