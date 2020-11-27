@@ -17,9 +17,9 @@ public class Handler : MonoBehaviour {
     [SerializeField] private Sprite menuOn = null;
     [SerializeField] private Sprite menuOff = null;
     [SerializeField] private Image menuOnOffImage = null;
-    [SerializeField] private Slider progressBar = null;
     [SerializeField] private Image[] modeImages = null;
     [SerializeField] private Image[] altitudeImages = null;
+    [SerializeField] private Text droneStatusText = null;
 
     [Header("Drone Editor")]
     [SerializeField] private Button droneEditorBtn = null;
@@ -45,6 +45,7 @@ public class Handler : MonoBehaviour {
     void Start() {
         editor.SetActive(false);
         menu.SetActive(true);
+        droneStatusText.text = "Drone status: no drone";
     }
 
     void Update() {
@@ -68,6 +69,7 @@ public class Handler : MonoBehaviour {
                     if (DestinationReached()) {
                         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
                         drone.StartDrone();
+                        droneStatusText.text = "Drone status: flying";
                     }
                 }
 
@@ -98,6 +100,10 @@ public class Handler : MonoBehaviour {
 
     public void ShowSpawnablesCategory(int category) {
         switch (category) {
+            case -1:
+                showDrones.SetActive(false);
+                showForms.SetActive(false);
+                break;
             case 0:
                 showDrones.SetActive(true);
                 showForms.SetActive(false);
@@ -124,6 +130,7 @@ public class Handler : MonoBehaviour {
         drone = Instantiate(droneGO, transform).GetComponent<DroneController>();
         drone.transform.position = spawnPosition;
         drone.transform.rotation = Quaternion.Euler(spawnRotation);
+        droneStatusText.text = "Drone status: stationary";
     }
 
     public void SpawnDrone(Sprite spr) {
@@ -135,6 +142,21 @@ public class Handler : MonoBehaviour {
         CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.StartDrone();
+        droneStatusText.text = "Drone status: stationary";
+    }
+
+    public void StopDrone() {
+        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        drone.StopDrone();
+        droneStatusText.text = "Drone status: flying";
+    }
+
+    public void ResetDrone() {
+        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
+        droneStatusText.text = "Drone status: stationary";
     }
 
     public void FlyAway(Image btn) {

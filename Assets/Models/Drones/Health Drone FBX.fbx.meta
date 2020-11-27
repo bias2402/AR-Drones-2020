@@ -3,81 +3,38 @@ guid: 6d01214501b22b2408666ae726b7d862
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Ambulance Text Left
-    100002: Ambulance Text Right
-    100004: Camera Text
-    100006: Circle
-    100008: //RootNode
-    100010: HealthDrone - Body
-    100012: HealthDrone - Rotor
-    100014: HealthDrone - Tail
-    100016: HealthDrone - Wings
-    100018: Panel Front
-    100020: Panel Left
-    100022: Panel Right
-    100024: Pattern Left
-    100026: Pattern Right
-    400000: Ambulance Text Left
-    400002: Ambulance Text Right
-    400004: Camera Text
-    400006: Circle
-    400008: //RootNode
-    400010: HealthDrone - Body
-    400012: HealthDrone - Rotor
-    400014: HealthDrone - Tail
-    400016: HealthDrone - Wings
-    400018: Panel Front
-    400020: Panel Left
-    400022: Panel Right
-    400024: Pattern Left
-    400026: Pattern Right
+    100000: Cross
+    100002: //RootNode
+    100004: HealthDrone - Body
+    100006: HealthDrone - Tail
+    100008: HealthDrone - Wings
+    100010: Pattern
+    400000: Cross
+    400002: //RootNode
+    400004: HealthDrone - Body
+    400006: HealthDrone - Tail
+    400008: HealthDrone - Wings
+    400010: Pattern
     2100000: Base
-    2100002: Rotor
-    2100004: Text
-    2100006: Panel
-    2100008: No Name
-    2100010: Pattern
-    2100012: Background
-    2100014: Cross
-    2300000: Ambulance Text Left
-    2300002: Ambulance Text Right
-    2300004: Camera Text
-    2300006: Circle
-    2300008: HealthDrone - Body
-    2300010: HealthDrone - Rotor
-    2300012: HealthDrone - Tail
-    2300014: HealthDrone - Wings
-    2300016: Panel Front
-    2300018: Panel Left
-    2300020: Panel Right
-    2300022: Pattern Left
-    2300024: Pattern Right
-    3300000: Ambulance Text Left
-    3300002: Ambulance Text Right
-    3300004: Camera Text
-    3300006: Circle
-    3300008: HealthDrone - Body
-    3300010: HealthDrone - Rotor
-    3300012: HealthDrone - Tail
-    3300014: HealthDrone - Wings
-    3300016: Panel Front
-    3300018: Panel Left
-    3300020: Panel Right
-    3300022: Pattern Left
-    3300024: Pattern Right
+    2100002: Background
+    2100004: Cross
+    2100006: Pattern
+    2300000: Cross
+    2300002: HealthDrone - Body
+    2300004: HealthDrone - Tail
+    2300006: HealthDrone - Wings
+    2300008: Pattern
+    3300000: Cross
+    3300002: HealthDrone - Body
+    3300004: HealthDrone - Tail
+    3300006: HealthDrone - Wings
+    3300008: Pattern
     4300000: HealthDrone - Body
     4300002: HealthDrone - Wings
     4300004: HealthDrone - Tail
-    4300006: HealthDrone - Rotor
-    4300008: Ambulance Text Right
-    4300010: Ambulance Text Left
-    4300012: Panel Right
-    4300014: Panel Left
-    4300016: Panel Front
-    4300018: Camera Text
-    4300020: Pattern Right
-    4300022: Pattern Left
-    4300024: Circle
+    4300006: Cross
+    4300008: Pattern
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1

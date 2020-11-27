@@ -1,76 +1,50 @@
 fileFormatVersion: 2
-guid: f9075913b618ce54aa40a2cf93c5099f
+guid: 018d31983e65f254fa8cfdb1f250e561
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Ambulance Text Left
-    100002: Ambulance Text Right
-    100004: Camera Text
-    100006: //RootNode
-    100008: HealthDrone - Body
-    100010: HealthDrone - Rotor
-    100012: HealthDrone - Tail
-    100014: HealthDrone - Wings
-    100016: Panel Front
-    100018: Panel Left
-    100020: Panel Right
-    100022: Pattern Left
-    100024: Pattern Right
-    400000: Ambulance Text Left
-    400002: Ambulance Text Right
-    400004: Camera Text
-    400006: //RootNode
-    400008: HealthDrone - Body
-    400010: HealthDrone - Rotor
-    400012: HealthDrone - Tail
-    400014: HealthDrone - Wings
-    400016: Panel Front
-    400018: Panel Left
-    400020: Panel Right
-    400022: Pattern Left
-    400024: Pattern Right
-    2100000: Base
-    2100002: Rotor
-    2100004: Text
-    2100006: Panel
-    2100008: No Name
-    2100010: Pattern
-    2300000: Ambulance Text Left
-    2300002: Ambulance Text Right
-    2300004: Camera Text
-    2300006: HealthDrone - Body
-    2300008: HealthDrone - Rotor
-    2300010: HealthDrone - Tail
-    2300012: HealthDrone - Wings
-    2300014: Panel Front
-    2300016: Panel Left
-    2300018: Panel Right
-    2300020: Pattern Left
-    2300022: Pattern Right
-    3300000: Ambulance Text Left
-    3300002: Ambulance Text Right
-    3300004: Camera Text
-    3300006: HealthDrone - Body
-    3300008: HealthDrone - Rotor
-    3300010: HealthDrone - Tail
-    3300012: HealthDrone - Wings
-    3300014: Panel Front
-    3300016: Panel Left
-    3300018: Panel Right
-    3300020: Pattern Left
-    3300022: Pattern Right
+    100000: //RootNode
+    100002: HealthDrone - Body
+    100004: HealthDrone - Rotor
+    100006: HealthDrone - Tail
+    100008: HealthDrone - Wings
+    100010: Pattern
+    100012: Text
+    100014: Text Backgrounds
+    400000: //RootNode
+    400002: HealthDrone - Body
+    400004: HealthDrone - Rotor
+    400006: HealthDrone - Tail
+    400008: HealthDrone - Wings
+    400010: Pattern
+    400012: Text
+    400014: Text Backgrounds
+    2100000: Base.001
+    2100002: Rotor.001
+    2100004: Panel
+    2100006: Text
+    2100008: Pattern.001
+    2300000: HealthDrone - Body
+    2300002: HealthDrone - Rotor
+    2300004: HealthDrone - Tail
+    2300006: HealthDrone - Wings
+    2300008: Pattern
+    2300010: Text
+    2300012: Text Backgrounds
+    3300000: HealthDrone - Body
+    3300002: HealthDrone - Rotor
+    3300004: HealthDrone - Tail
+    3300006: HealthDrone - Wings
+    3300008: Pattern
+    3300010: Text
+    3300012: Text Backgrounds
     4300000: HealthDrone - Body
     4300002: HealthDrone - Wings
     4300004: HealthDrone - Tail
     4300006: HealthDrone - Rotor
-    4300008: Ambulance Text Right
-    4300010: Ambulance Text Left
-    4300012: Panel Right
-    4300014: Panel Left
-    4300016: Panel Front
-    4300018: Camera Text
-    4300020: Pattern Right
-    4300022: Pattern Left
+    4300008: Text Backgrounds
+    4300010: Text
+    4300012: Pattern
   externalObjects: {}
   materials:
     importMaterials: 1

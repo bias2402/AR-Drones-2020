@@ -3,50 +3,58 @@ guid: a088fb4da2eaab7458d0703033fd3e57
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Cross
-    100002: Flaps
-    100004: Pattern Left
-    100006: Pattern Right
-    100008: Pipes
-    100010: Tail
-    100012: //RootNode
-    100014: Wings
-    400000: Cross
-    400002: Flaps
-    400004: Pattern Left
-    400006: Pattern Right
-    400008: Pipes
-    400010: Tail
-    400012: //RootNode
-    400014: Wings
+    100000: Cross Left
+    100002: Cross Right
+    100004: Flaps
+    100006: Pattern Left
+    100008: Pattern Right
+    100010: Pipes
+    100012: Tail
+    100014: //RootNode
+    100016: Wings
+    400000: Cross Left
+    400002: Cross Right
+    400004: Flaps
+    400006: Pattern Left
+    400008: Pattern Right
+    400010: Pipes
+    400012: Tail
+    400014: //RootNode
+    400016: Wings
     2100000: Tail
     2100002: Wings
     2100004: Flaps
     2100006: Pipes
-    2100008: Pattern
-    2100010: Background
-    2100012: Cross
-    2300000: Cross
-    2300002: Flaps
-    2300004: Pattern Left
-    2300006: Pattern Right
-    2300008: Pipes
-    2300010: Tail
-    2300012: Wings
-    3300000: Cross
-    3300002: Flaps
-    3300004: Pattern Left
-    3300006: Pattern Right
-    3300008: Pipes
-    3300010: Tail
-    3300012: Wings
+    2100008: Pattern Green
+    2100010: Pattern Yellow
+    2100012: Background
+    2100014: Cross
+    2100016: Background.003
+    2100018: Cross.003
+    2300000: Cross Left
+    2300002: Cross Right
+    2300004: Flaps
+    2300006: Pattern Left
+    2300008: Pattern Right
+    2300010: Pipes
+    2300012: Tail
+    2300014: Wings
+    3300000: Cross Left
+    3300002: Cross Right
+    3300004: Flaps
+    3300006: Pattern Left
+    3300008: Pattern Right
+    3300010: Pipes
+    3300012: Tail
+    3300014: Wings
     4300000: Tail
     4300002: Wings
     4300004: Flaps
     4300006: Pipes
-    4300008: Pattern Right
-    4300010: Pattern Left
-    4300012: Cross
+    4300008: Pattern Left
+    4300010: Pattern Right
+    4300012: Cross Left
+    4300014: Cross Right
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
