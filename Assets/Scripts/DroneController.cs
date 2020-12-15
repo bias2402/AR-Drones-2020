@@ -54,7 +54,7 @@ public class DroneController : MonoBehaviour {
     void FixedUpdate() {
         if (isDroneMoving) {
             if (droneRb.velocity.magnitude >= 15) { return; }
-            droneRb.AddRelativeForce(Vector3.forward, ForceMode.Acceleration);
+            droneRb.AddRelativeForce(Vector3.forward, ForceMode.VelocityChange);
         } else {
             droneRb.velocity = Vector3.zero;
             droneRb.angularVelocity = Vector3.zero;

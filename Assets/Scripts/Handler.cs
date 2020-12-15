@@ -69,7 +69,6 @@ public class Handler : MonoBehaviour {
                     if (DestinationReached()) {
                         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
                         drone.StartDrone();
-                        droneStatusText.text = "Drone status: flying";
                     }
                 }
 
@@ -142,14 +141,14 @@ public class Handler : MonoBehaviour {
         CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.StartDrone();
-        droneStatusText.text = "Drone status: stationary";
+        droneStatusText.text = "Drone status: flying";
     }
 
     public void StopDrone() {
         CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.StopDrone();
-        droneStatusText.text = "Drone status: flying";
+        droneStatusText.text = "Drone status: stationary";
     }
 
     public void ResetDrone() {

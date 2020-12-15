@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DroneEditor : MonoBehaviour {
+    [SerializeField] private OnClickSpecialEffects onClickSpecialEffectsHandler = null;
     [SerializeField] private Transform dronePlacement = null;
     [SerializeField] private RectTransform partsView = null;
     [SerializeField] private GameObject modelPartPrefab = null;
@@ -54,6 +55,7 @@ public class DroneEditor : MonoBehaviour {
             mp.button.onClick.AddListener(delegate {
                 SelectDronePart(mp.index);
             });
+            mp.button.onClick.AddListener(onClickSpecialEffectsHandler.TriggerFlash);
         }
         currentlySelectedPart = null;
     }
