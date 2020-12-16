@@ -5,6 +5,19 @@ using UnityEngine.UI;
 
 public class OnClickSpecialEffects : MonoBehaviour {
     [SerializeField] private RectTransform flashPanel = null;
+    [SerializeField] private AudioSource audioSource = null;
+    [SerializeField] private AudioClip[] audioClips = null;
+
+    public void PlayClickSound() {
+        if (audioClips.Length == 0) return;
+        audioSource.clip = audioClips[0];
+        PlayAudio();
+    }
+
+    void PlayAudio() {
+        if (audioSource.clip == null) return;
+        audioSource.Play();
+    }
 
     public void TriggerFlash() {
         StartCoroutine(Flash());

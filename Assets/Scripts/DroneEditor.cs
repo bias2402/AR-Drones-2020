@@ -56,6 +56,7 @@ public class DroneEditor : MonoBehaviour {
                 SelectDronePart(mp.index);
             });
             mp.button.onClick.AddListener(onClickSpecialEffectsHandler.TriggerFlash);
+            mp.button.onClick.AddListener(onClickSpecialEffectsHandler.PlayClickSound);
         }
         currentlySelectedPart = null;
     }
