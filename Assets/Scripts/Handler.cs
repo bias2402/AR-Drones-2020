@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Handler : MonoBehaviour {
     private enum FlyMode { FlyBy, FlyAway, FlyTo }
     private FlyMode flyMode = FlyMode.FlyAway;
-    private Vector3 startPoint = Vector3.zero;
     private Vector3 destination = Vector3.zero;
     private int altitude = 2;
     private DroneController drone = null;
@@ -20,6 +19,9 @@ public class Handler : MonoBehaviour {
     [SerializeField] private Image[] modeImages = null;
     [SerializeField] private Image[] altitudeImages = null;
     [SerializeField] private Text droneStatusText = null;
+    [SerializeField] private GameObject[] helpWindows = null;
+    [SerializeField] private GameObject postStartAnimHelpWindow = null;
+    [SerializeField] private GameObject tutorialPrompt = null;
 
     [Header("Drone Editor")]
     [SerializeField] private Button droneEditorBtn = null;
@@ -32,36 +34,45 @@ public class Handler : MonoBehaviour {
     [SerializeField] private GameObject showForms = null;
     [SerializeField] private Image currentSpawn = null;
 
+    [Header("Animation Settings")]
+    public bool isStartupAnimationOver = false;
     private bool isMenuShown = true;
     private bool isStartingUp = true;
+    private bool isThroughPrompt = false;
     private float startCounter = 0;
-    private int lastMenuItemShown = -1;
+    private int startupAnimationIndex = -1;
 
     [Header("Effects")]
-    [SerializeField] private bool doAnimateMenuSetup = false;
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
 
     void Start() {
         editor.SetActive(false);
-        menu.SetActive(true);
+        menu.SetActive(false);
+        currentSpawn.gameObject.SetActive(false);
+        menuOnOffImage.gameObject.SetActive(false);
         droneStatusText.text = "Drone status: no drone";
     }
 
     void Update() {
+        if (!isThroughPrompt) return;
         if (isStartingUp) {
-            if (!doAnimateMenuSetup) {
-                isStartingUp = false;
-                menuAnimator.SetInteger("menuShown", 10);
-                return;
-            }
-            if (startCounter > 3) {
-                startCounter += Time.deltaTime;
-            } else {
-                CheckVisibilityOfMenuParts();
+            startCounter += Time.deltaTime;
+            if (menuAnimator.GetInteger("menuShown") == -1) CheckVisibilityOfMenuParts();
+            if (startCounter > 1) {
+                menu.SetActive(true);
                 isStartingUp = false;
             }
-        } else {
+            return;
+        }
+        if (isStartupAnimationOver) {
+            startupAnimationIndex = 10;
+            ShowHelpWindow(-1);
+            postStartAnimHelpWindow.SetActive(true);
+            menuAnimator.SetInteger("menuShown", startupAnimationIndex);
+        }
+
+        if (startupAnimationIndex == 10) {
             if (drone != null) {
                 if (!droneEditorBtn.interactable) droneEditorBtn.interactable = true;
 
@@ -77,6 +88,19 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    public void WantToSeeStartUpAnimation(bool doAnimate) {
+        tutorialPrompt.SetActive(false);
+        isThroughPrompt = true;
+
+        if (!doAnimate) {
+            isStartingUp = false;
+            startupAnimationIndex = 10;
+            menuAnimator.SetInteger("menuShown", startupAnimationIndex);
+            menu.SetActive(true);
+            postStartAnimHelpWindow.SetActive(true);
+        }
+    }
+
     void UpdateDronePointer() {
         Vector3 relativePosition = drone.GetRigidbody().position - dronePointer.position;
         float angle = Vector3.Angle(relativePosition, dronePointer.forward);
@@ -84,9 +108,11 @@ public class Handler : MonoBehaviour {
     }                       //Work in process
 
     void CheckVisibilityOfMenuParts() {
-        if (lastMenuItemShown < 4) {
-            lastMenuItemShown++;
-            menuAnimator.SetInteger("menuShown", lastMenuItemShown);
+        if (menuAnimator.GetInteger("menuShown") == 10) return;
+        if (startupAnimationIndex < 10) {
+            startupAnimationIndex++;
+            if (startupAnimationIndex < helpWindows.Length) ShowHelpWindow(startupAnimationIndex);
+            menuAnimator.SetInteger("menuShown", startupAnimationIndex);
         }
     }
 
@@ -119,10 +145,7 @@ public class Handler : MonoBehaviour {
         showDrones.SetActive(false);
         showForms.SetActive(false);
 
-        if (lastMenuItemShown == 0) {
-            lastMenuItemShown++;
-            menuAnimator.SetInteger("menuShown", lastMenuItemShown);
-        }
+        if (startupAnimationIndex == 0) CheckVisibilityOfMenuParts();
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
@@ -138,28 +161,26 @@ public class Handler : MonoBehaviour {
     }
 
     public void StartDrone() {
-        CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.StartDrone();
         droneStatusText.text = "Drone status: flying";
     }
 
     public void StopDrone() {
-        CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.StopDrone();
         droneStatusText.text = "Drone status: stationary";
     }
 
     public void ResetDrone() {
-        CheckVisibilityOfMenuParts();
         if (drone == null) return;
         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         droneStatusText.text = "Drone status: stationary";
     }
 
     public void FlyAway(Image btn) {
-        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyAway;
         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(0, altitude, 120);
@@ -167,7 +188,8 @@ public class Handler : MonoBehaviour {
     }
 
     public void FlyTowards(Image btn) {
-        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyTo;
         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(0, altitude, 0);
@@ -175,7 +197,8 @@ public class Handler : MonoBehaviour {
     }
 
     public void FlyBy(Image btn) {
-        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyBy;
         drone.ResetDrone(FlyModePosition(), FlyModeRotation());
         destination = new Vector3(-100, altitude, 50);
@@ -183,6 +206,7 @@ public class Handler : MonoBehaviour {
     }
 
     void ModeColors(Image btn) {
+        if (drone == null) return;
         foreach (Image img in modeImages) {
             img.color = Color.white;
         }
@@ -214,7 +238,7 @@ public class Handler : MonoBehaviour {
                 return new Vector3(0, altitude, 100);
             default:
                 return Vector3.zero;
-        } 
+        }
     }
 
     Quaternion FlyModeRotation() {
@@ -231,12 +255,14 @@ public class Handler : MonoBehaviour {
     }
 
     public void SetAltitude(int altitude) {
-        CheckVisibilityOfMenuParts();
+        if (drone == null) return;
+        if (startupAnimationIndex == 1) CheckVisibilityOfMenuParts();
         this.altitude = altitude;
-        if (drone != null) drone.transform.position = new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
+        drone.transform.position = new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
     }
 
     public void SetAltitude(Image btn) {
+        if (drone == null) return;
         foreach (Image img in altitudeImages) {
             img.color = Color.white;
         }
@@ -254,5 +280,24 @@ public class Handler : MonoBehaviour {
             drone.transform.localPosition = spawnPosition;
             drone.transform.rotation = Quaternion.Euler(spawnRotation);
         }
+    }
+
+    public void ShowHelpWindow(int index) {
+        postStartAnimHelpWindow.SetActive(false);
+        Debug.Log("I: " + index + " L: " + helpWindows.Length);
+
+        if (index > -1 && helpWindows[index].activeSelf) {
+            foreach (GameObject go in helpWindows) {
+                go.SetActive(false);
+            }
+        } else {
+            foreach (GameObject go in helpWindows) {
+                go.SetActive(false);
+            }
+            if (index == -1) return;
+            Debug.Log("Here");
+            helpWindows[index].SetActive(true);
+        }
+
     }
 }
