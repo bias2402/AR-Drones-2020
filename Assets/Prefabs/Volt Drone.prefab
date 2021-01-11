@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2807990534067528188}
   - component: {fileID: 7975576691303178838}
   - component: {fileID: 6545194252178569000}
+  - component: {fileID: 1413118360362636576}
   m_Layer: 8
   m_Name: Volt Drone
   m_TagString: Untagged
@@ -186,6 +187,8 @@ MonoBehaviour:
   droneParticles: []
   audioSource: {fileID: 6545194252178569000}
   model: {fileID: 39847121595099845}
+  navAgent: {fileID: 1413118360362636576}
+  droneSpeed: 15
 --- !u!82 &6545194252178569000
 AudioSource:
   m_ObjectHideFlags: 0
@@ -318,6 +321,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &1413118360362636576
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6321720692668364130}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 30
+  avoidancePriority: 50
+  m_AngularSpeed: 15
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &9035148270238597511
 GameObject:
   m_ObjectHideFlags: 0

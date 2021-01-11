@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 5261604236407569073}
   - component: {fileID: 6323790127903302438}
   - component: {fileID: 6152697806859456684}
+  - component: {fileID: 6958075687963519742}
   m_Layer: 8
   m_Name: Multirotor Drone
   m_TagString: Untagged
@@ -200,7 +201,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 14.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2432479408895138551}
+  - {fileID: 2432479408895138545}
   - {fileID: 6974621717386942907}
   - {fileID: 4751546418961865381}
   - {fileID: 2049949315950203993}
@@ -272,6 +273,8 @@ MonoBehaviour:
   droneParticles: []
   audioSource: {fileID: 6152697806859456684}
   model: {fileID: 0}
+  navAgent: {fileID: 6958075687963519742}
+  droneSpeed: 15
 --- !u!82 &6152697806859456684
 AudioSource:
   m_ObjectHideFlags: 0
@@ -404,6 +407,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &6958075687963519742
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383681709030449022}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 30
+  avoidancePriority: 50
+  m_AngularSpeed: 15
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
 --- !u!1 &3387589184385438003
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +608,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Multirotor FBX
       objectReference: {fileID: 0}
+    - target: {fileID: 400010, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400012, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -627,11 +660,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc, type: 3}
---- !u!4 &2432479408895138551 stripped
+--- !u!4 &2432479408895138545 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400014, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc,
+  m_CorrespondingSourceObject: {fileID: 400008, guid: 4a8a6f9c08cad984fb4b2d2ce1e2e9fc,
     type: 3}
   m_PrefabInstance: {fileID: 2432479408895000697}
   m_PrefabAsset: {fileID: 0}

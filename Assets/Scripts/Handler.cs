@@ -35,18 +35,20 @@ public class Handler : MonoBehaviour {
     [SerializeField] private Image currentSpawn = null;
 
     [Header("Animation Settings")]
-    public bool isStartupAnimationOver = false;
     private bool isMenuShown = true;
     private bool isStartingUp = true;
     private bool isThroughPrompt = false;
     private float startCounter = 0;
+    private float animEndCounter = 0;
     private int startupAnimationIndex = -1;
 
     [Header("Effects")]
     [SerializeField] private Animator menuAnimator = null;
     [SerializeField] private Transform dronePointer = null;
+    //[SerializeField] private Text testText = null;
 
     void Start() {
+        menuAnimator.enabled = false;
         editor.SetActive(false);
         menu.SetActive(false);
         currentSpawn.gameObject.SetActive(false);
@@ -55,6 +57,8 @@ public class Handler : MonoBehaviour {
     }
 
     void Update() {
+        //Start-up prompt and animation handling
+        #region
         if (!isThroughPrompt) return;
         if (isStartingUp) {
             startCounter += Time.deltaTime;
@@ -65,21 +69,29 @@ public class Handler : MonoBehaviour {
             }
             return;
         }
-        if (isStartupAnimationOver) {
+
+        if (startupAnimationIndex == 3) {
+            animEndCounter += Time.deltaTime;
+            if (animEndCounter > 8) {
+                CheckVisibilityOfMenuParts();
+            }
+        }
+
+        if (startupAnimationIndex == 4) {
             startupAnimationIndex = 10;
             ShowHelpWindow(-1);
             postStartAnimHelpWindow.SetActive(true);
             menuAnimator.SetInteger("menuShown", startupAnimationIndex);
         }
+        #endregion
 
-        if (startupAnimationIndex == 10) {
+        //Drone control
+        if (startupAnimationIndex >= 10) {
             if (drone != null) {
-                if (!droneEditorBtn.interactable) droneEditorBtn.interactable = true;
-
                 if (drone.GetIsDroneMoving()) {
-                    if (DestinationReached()) {
-                        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
-                        drone.StartDrone();
+                    if (Vector3.Distance(FlyModeDestination(), drone.transform.position - Vector3.up * altitude) < 2) {
+                        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
+                        drone.StartDrone(FlyModeDestination());
                     }
                 }
 
@@ -91,6 +103,7 @@ public class Handler : MonoBehaviour {
     public void WantToSeeStartUpAnimation(bool doAnimate) {
         tutorialPrompt.SetActive(false);
         isThroughPrompt = true;
+        menuAnimator.enabled = true;
 
         if (!doAnimate) {
             isStartingUp = false;
@@ -153,6 +166,7 @@ public class Handler : MonoBehaviour {
         drone.transform.position = spawnPosition;
         drone.transform.rotation = Quaternion.Euler(spawnRotation);
         droneStatusText.text = "Drone status: stationary";
+        if (!droneEditorBtn.interactable) droneEditorBtn.interactable = true;
     }
 
     public void SpawnDrone(Sprite spr) {
@@ -162,7 +176,7 @@ public class Handler : MonoBehaviour {
 
     public void StartDrone() {
         if (drone == null) return;
-        drone.StartDrone();
+        drone.StartDrone(FlyModeDestination());
         droneStatusText.text = "Drone status: flying";
     }
 
@@ -174,7 +188,7 @@ public class Handler : MonoBehaviour {
 
     public void ResetDrone() {
         if (drone == null) return;
-        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
+        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
         droneStatusText.text = "Drone status: stationary";
     }
 
@@ -182,8 +196,7 @@ public class Handler : MonoBehaviour {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyAway;
-        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
-        destination = new Vector3(0, altitude, 120);
+        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
         ModeColors(btn);
     }
 
@@ -191,8 +204,7 @@ public class Handler : MonoBehaviour {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyTo;
-        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
-        destination = new Vector3(0, altitude, 0);
+        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
         ModeColors(btn);
     }
 
@@ -200,8 +212,7 @@ public class Handler : MonoBehaviour {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
         flyMode = FlyMode.FlyBy;
-        drone.ResetDrone(FlyModePosition(), FlyModeRotation());
-        destination = new Vector3(-100, altitude, 50);
+        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
         ModeColors(btn);
     }
 
@@ -213,29 +224,26 @@ public class Handler : MonoBehaviour {
         btn.color = Color.yellow;
     }
 
-    bool DestinationReached() {
+    Vector3 FlyModeStartPosition() {
         switch (flyMode) {
             case FlyMode.FlyAway:
-                if (drone.transform.position.z > destination.z) { return true; }
-                break;
+                return new Vector3(0, altitude, -100);
             case FlyMode.FlyBy:
-                if (drone.transform.position.x < destination.x) { return true; }
-                break;
+                return new Vector3(100, altitude, -50);
             case FlyMode.FlyTo:
-                if (drone.transform.position.z < destination.z) { return true; }
-                break;
+                return new Vector3(0, altitude, 150);
+            default:
+                return Vector3.zero;
         }
-        return false;
     }
-
-    Vector3 FlyModePosition() {
+    Vector3 FlyModeDestination() {
         switch (flyMode) {
             case FlyMode.FlyAway:
-                return new Vector3(0, altitude, 0);
+                return new Vector3(0, 0, 150);
             case FlyMode.FlyBy:
-                return new Vector3(100, altitude, 50);
+                return new Vector3(-100, 0, 50);
             case FlyMode.FlyTo:
-                return new Vector3(0, altitude, 100);
+                return new Vector3(0, 0, -100);
             default:
                 return Vector3.zero;
         }
@@ -258,7 +266,7 @@ public class Handler : MonoBehaviour {
         if (drone == null) return;
         if (startupAnimationIndex == 1) CheckVisibilityOfMenuParts();
         this.altitude = altitude;
-        drone.transform.position = new Vector3(drone.transform.position.x, altitude, drone.transform.position.z);
+        drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
     }
 
     public void SetAltitude(Image btn) {
@@ -284,7 +292,6 @@ public class Handler : MonoBehaviour {
 
     public void ShowHelpWindow(int index) {
         postStartAnimHelpWindow.SetActive(false);
-        Debug.Log("I: " + index + " L: " + helpWindows.Length);
 
         if (index > -1 && helpWindows[index].activeSelf) {
             foreach (GameObject go in helpWindows) {
