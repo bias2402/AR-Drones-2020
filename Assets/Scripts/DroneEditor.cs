@@ -12,22 +12,28 @@ public class DroneEditor : MonoBehaviour {
     private List<ModelPart> modelParts = new List<ModelPart>();
     private MeshRenderer currentlySelectedPart = null;
 
+    //Set the drone reference to the drone placed in the editor window
     void OnEnable() {
         drone = dronePlacement.GetChild(0);
         MakeModelPartsList();
     }
 
+    //Iterate the drone's model and create a list of parts, which can then be picked in the editor window
     void MakeModelPartsList() {
         List<GameObject> partsToSave = new List<GameObject>();
+
+        //Get the model
         Transform model = drone.GetComponent<DroneController>().GetModel();
         if (model == null) return;
 
+        //Get all the meshrenderer of each part in the drone's model
         foreach (Transform c in model) {
             if (c.GetComponent<MeshRenderer>() != null) {
                 partsToSave.Add(c.gameObject);
             }
         }
 
+        //Clear the modelParts list if it already contains something (if another drone has been edited)
         if (modelParts.Count > 0) {
             for (int i = 0; i < modelParts.Count;) {
                 Destroy(modelParts[i].gameObject);
@@ -36,6 +42,7 @@ public class DroneEditor : MonoBehaviour {
             modelParts.Clear();
         }
 
+        //Create a button for each part of the model and place them correctly in a scrollview
         foreach (GameObject go in partsToSave) {
             GameObject newBtn = Instantiate(modelPartPrefab, partsView);
             newBtn.transform.localPosition = new Vector3(0, -2 - (30 * modelParts.Count), 0);
@@ -49,8 +56,10 @@ public class DroneEditor : MonoBehaviour {
             newBtn.GetComponentInChildren<Text>().text = go.name;
             modelParts.Add(newPart);
         }
+        //Resize the scrollview's content transform, so the user can actually scroll through and see all parts
         partsView.sizeDelta = new Vector2(0, modelParts.Count * 30 + 4);
 
+        //Add some events to play effects and sounds, when the new buttons are clicked
         foreach (ModelPart mp in modelParts) {
             mp.button.onClick.AddListener(delegate {
                 SelectDronePart(mp.index);
@@ -61,6 +70,7 @@ public class DroneEditor : MonoBehaviour {
         currentlySelectedPart = null;
     }
 
+    //These six methods set the rotation of the drone, so the user can see it from different set angles
     public void RotateDroneLeft() => drone.localRotation = Quaternion.Euler(0, 270, 0);
 
     public void RotateDroneRight() => drone.localRotation = Quaternion.Euler(0, 90, 0);
@@ -73,7 +83,8 @@ public class DroneEditor : MonoBehaviour {
 
     public void RotateDroneBack() => drone.localRotation = Quaternion.Euler(0, 0, 0);
 
-
+    //Method called by one of the button events from before, which remove highlight from all buttons and set the
+    //clicked button as highlighted (changing its color to yellow)
     void SelectDronePart(int i) {
         foreach (ModelPart mp in modelParts) {
             mp.image.color = Color.white;
@@ -82,6 +93,7 @@ public class DroneEditor : MonoBehaviour {
         currentlySelectedPart = modelParts[i].meshRenderer;
     }
 
+    //When a part is selected, this method can be called to change the color of the part to the clicked color
     public void SetColor(string color) {
         if (currentlySelectedPart == null) return;
         Color c = currentlySelectedPart.material.color;
@@ -111,6 +123,7 @@ public class DroneEditor : MonoBehaviour {
     }
 }
 
+//Container for keeping references to the different sub-parts of a model part
 public struct ModelPart {
     public Button button;
     public Image image;

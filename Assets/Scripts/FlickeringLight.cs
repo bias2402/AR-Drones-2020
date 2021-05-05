@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FlickeringLight : MonoBehaviour {
     [SerializeField] private bool isOnAtStart = false;
@@ -9,12 +7,14 @@ public class FlickeringLight : MonoBehaviour {
     private float counter = 0;
     private Light lightSource = null;
 
+    //Prepare the light effect, and add the delay if it's set in the inspector
     void Start() {
         lightSource = GetComponent<Light>();
         lightSource.enabled = isOnAtStart;
         counter += delay;
     }
 
+    //Whenever the counter hits the timer, turn the light on or off
     void Update() {
         counter += Time.deltaTime;
         if (counter >= flickeringTime) {

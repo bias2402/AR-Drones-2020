@@ -20,6 +20,7 @@ public class DroneController : MonoBehaviour {
 
     public Transform GetModel() { return model; }
 
+    //Can be used to set the drone's position and rotation, e.g. to set the starting position
     public void SetPosition(Vector3 position, Quaternion rotation) {
         if (!navAgent.enabled) navAgent.enabled = true;
         isDroneMoving = false;
@@ -33,13 +34,14 @@ public class DroneController : MonoBehaviour {
         if (droneParticles.Length > 0) foreach (ParticleSystem ps in droneParticles) ps.Stop();
     }
     
+    //Offset the NavMesh collider, so the drone can be high up, while keeping its NavMesh collider on the NaxMesh
     void SetNavAnchor() => navAgent.baseOffset = transform.position.y;
     #endregion
 
-    private void Start() {
-        droneRb.isKinematic = true;
-    }
+    //Set the rigidbody to kinematic,so it doesn't fall down before started
+    private void Start() => droneRb.isKinematic = true;
 
+    //Start the drone by activating its rigidbody, set its speed, its destination, and start its effects
     public void StartDrone(Vector3 dest) {
         droneRb.isKinematic = false;
         isDroneMoving = true;
@@ -52,6 +54,9 @@ public class DroneController : MonoBehaviour {
         foreach (ParticleSystem ps in droneParticles) ps.Play();
     }
 
+    //Stop the drone by cancelling out all the physics and setting it to kinematic (setting it to kinematic
+    //should cancel it all out, but setting the other things are merely a safety choice, so it doesn't 
+    //somehow keep them for when it is started again)
     public void StopDrone() {
         droneRb.isKinematic = true;
         droneRb.velocity = Vector3.zero;
@@ -63,32 +68,4 @@ public class DroneController : MonoBehaviour {
         if (droneParticles.Length == 0) return;
         foreach (ParticleSystem ps in droneParticles) ps.Stop();
     }
-
-    /*void FixedUpdate() {
-        if (isDroneMoving) {
-            if (IsAnObstaclesInFront(out bool turnLeft, out bool turnRight)) {
-                Debug.Log("Found " + turnLeft + " " + turnRight);
-                if (turnLeft && turnRight) {
-                    transform.Rotate(Vector3.up, 10 * Time.deltaTime);
-                } else if (turnLeft) {
-                    transform.Rotate(Vector3.up, -10 * Time.deltaTime);
-                } else if (turnRight) {
-                    transform.Rotate(Vector3.up, 10 * Time.deltaTime);
-                }
-            }
-            if (droneRb.velocity.magnitude >= 15) return;
-            droneRb.AddRelativeForce(Vector3.forward, ForceMode.VelocityChange);
-        } else {
-            droneRb.velocity = Vector3.zero;
-            droneRb.angularVelocity = Vector3.zero;
-        }
-    }
-
-    bool IsAnObstaclesInFront(out bool turnLeft, out bool turnRight) {
-        Physics.Raycast(transform.position, transform.forward + new Vector3(0.15f, 0, 0), out RaycastHit hitL, 150, ~LayerMask.NameToLayer("Drone"));
-        Physics.Raycast(transform.position, transform.forward + new Vector3(-0.15f, 0, 0), out RaycastHit hitR, 150, ~LayerMask.NameToLayer("Drone"));
-        turnLeft = hitL.collider == null ? false : true;
-        turnRight = hitR.collider == null ? false : true;
-        return hitR.collider != null || hitL.collider != null ? true : false;
-    }*/
 }

@@ -69,6 +69,7 @@ public class Handler : MonoBehaviour {
             return;
         }
 
+        //Hardcoded timer to show the 4th part of the startup animation
         if (startupAnimationIndex == 3) {
             animEndCounter += Time.deltaTime;
             if (animEndCounter > 8) {
@@ -76,6 +77,7 @@ public class Handler : MonoBehaviour {
             }
         }
 
+        //Hardcoded transition to 'Ready' state from the startup animation
         if (startupAnimationIndex == 4) {
             startupAnimationIndex = 10;
             ShowHelpWindow(-1);
@@ -84,7 +86,7 @@ public class Handler : MonoBehaviour {
         }
         #endregion
 
-        //Drone control
+        //Drone control, visible if the startup animation's index is 10 (start animation is done/skipped)
         if (startupAnimationIndex >= 10) {
             if (drone != null) {
                 if (drone.GetIsDroneMoving()) {
@@ -94,35 +96,41 @@ public class Handler : MonoBehaviour {
                     }
                 }
 
-                //    UpdateDronePointer();
+                //UpdateDronePointer();
             }
         }
     }
 
+    //Point to the drone, so the user can find it easily.                   !!!Work in progress!!!
+    //TO DO: Finish this
     void UpdateDronePointer() {
         Vector3 relativePosition = drone.GetRigidbody().position - dronePointer.position;
         float angle = Vector3.Angle(relativePosition, dronePointer.forward);
         dronePointer.rotation = Quaternion.Euler(0, angle, 50);
-    }                       //Work in process
+    }
 
+    //Button method, so the user can start the drone
     public void StartDrone() {
         if (drone == null) return;
         drone.StartDrone(FlyModeDestination());
         droneStatusText.text = "Drone status: flying";
     }
 
+    //Button method, so the user can stop the drone
     public void StopDrone() {
         if (drone == null) return;
         drone.StopDrone();
         droneStatusText.text = "Drone status: stationary";
     }
 
+    //Button method, so the user can reset the drone
     public void ResetDrone() {
         if (drone == null) return;
         drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
         droneStatusText.text = "Drone status: stationary";
     }
 
+    //Hardcoded starting positions for pre-defined flight modes
     Vector3 FlyModeStartPosition() {
         switch (flyMode) {
             case FlyMode.FlyAway:
@@ -136,6 +144,7 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Hardcoded end positions for pre-defined flight modes
     Vector3 FlyModeDestination() {
         switch (flyMode) {
             case FlyMode.FlyAway:
@@ -149,6 +158,7 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Hardcoded rotations for pre-defined flight modes
     Quaternion FlyModeRotation() {
         switch (flyMode) {
             case FlyMode.FlyAway:
@@ -162,6 +172,7 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Advance the startup animation through its different parts
     void CheckVisibilityOfMenuParts() {
         if (menuAnimator.GetInteger("menuShown") == 10) return;
         if (startupAnimationIndex < 10) {
@@ -170,12 +181,15 @@ public class Handler : MonoBehaviour {
             menuAnimator.SetInteger("menuShown", startupAnimationIndex);
         }
     }
-    
+
+    //Method connected to two buttons for the startup prompt, so the user can choose to see the startup animation
+    //when they open the app
     public void WantToSeeStartUpAnimation(bool doAnimate) {
         tutorialPrompt.SetActive(false);
         isThroughPrompt = true;
         menuAnimator.enabled = true;
 
+        //If the 'No' button is clicked, it will skip the animation and set everything as 'Ready'
         if (!doAnimate) {
             isStartingUp = false;
             startupAnimationIndex = 10;
@@ -185,6 +199,7 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Button method for the Show/Hide button to trigger the animation that hides or shows the menu
     public void ToggleMenu() {
         CheckVisibilityOfMenuParts();
         isMenuShown = !isMenuShown;
@@ -192,6 +207,7 @@ public class Handler : MonoBehaviour {
         menuOnOffImage.sprite = isMenuShown ? menuOn : menuOff;
     }
 
+    //Button method to show spawnables
     public void ShowSpawnablesCategory(int category) {
         switch (category) {
             case -1:
@@ -209,27 +225,38 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Button method to spawn the given drone
     public void SpawnDrone(GameObject droneGO) {
         if (droneGO == null) return;
+
+        //Close the spawnable sub-menues
         showDrones.SetActive(false);
         showForms.SetActive(false);
 
         if (startupAnimationIndex == 0) CheckVisibilityOfMenuParts();
+
+        //Destroy the current drone (and everything else that shouldn't exist as a child)
         foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
+
+        //Instantiate and setup the drone
         drone = Instantiate(droneGO, transform).GetComponent<DroneController>();
         drone.transform.position = spawnPosition;
         drone.transform.rotation = Quaternion.Euler(spawnRotation);
         droneStatusText.text = "Drone status: stationary";
+
+        //If the editor button isn't interable, make it so (as there is a drone to edit now)
         if (!droneEditorBtn.interactable) droneEditorBtn.interactable = true;
     }
 
+    //Button method to set the current drone indicators sprite
     public void SpawnDrone(Sprite spr) {
         if (spr == null) return;
         currentSpawn.sprite = spr;
     }
 
+    //Button method to set the flight mode to FlyAway
     public void FlyAway(Image btn) {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
@@ -238,6 +265,7 @@ public class Handler : MonoBehaviour {
         ModeColors(btn);
     }
 
+    //Button method to set the flight mode to FlyTowards
     public void FlyTowards(Image btn) {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
@@ -246,6 +274,7 @@ public class Handler : MonoBehaviour {
         ModeColors(btn);
     }
 
+    //Button method to set the flight mode to FlyBy
     public void FlyBy(Image btn) {
         if (drone == null) return;
         if (startupAnimationIndex == 2) CheckVisibilityOfMenuParts();
@@ -254,6 +283,7 @@ public class Handler : MonoBehaviour {
         ModeColors(btn);
     }
 
+    //Button method to highlight the flight mode button that was clicked
     void ModeColors(Image btn) {
         if (drone == null) return;
         foreach (Image img in modeImages) {
@@ -262,6 +292,7 @@ public class Handler : MonoBehaviour {
         btn.color = Color.yellow;
     }
 
+    //Button method to set the altitude
     public void SetAltitude(int altitude) {
         if (drone == null) return;
         if (startupAnimationIndex == 1) CheckVisibilityOfMenuParts();
@@ -269,6 +300,7 @@ public class Handler : MonoBehaviour {
         drone.SetPosition(FlyModeStartPosition(), FlyModeRotation());
     }
 
+    //Button method to highlight the altitude button that was clicked
     public void SetAltitude(Image btn) {
         if (drone == null) return;
         foreach (Image img in altitudeImages) {
@@ -277,9 +309,11 @@ public class Handler : MonoBehaviour {
         btn.color = Color.yellow;
     }
 
+    //Button method that triggers the animation to open the drone editor
     public void OpenDroneEditor(bool isOpening) {
         menuAnimator.SetBool("isUsingEditor", isOpening);
 
+        //If the editor is opening, place the current drone inside the editor
         if (isOpening) {
             drone.transform.parent = dronePlacementInEditor;
             drone.transform.localPosition = Vector3.zero;
@@ -290,6 +324,7 @@ public class Handler : MonoBehaviour {
         }
     }
 
+    //Button method to open the help window and show hints
     public void ShowHelpWindow(int index) {
         postStartAnimHelpWindow.SetActive(false);
 
